@@ -1,0 +1,1 @@
+@livewire('instituicao.agendamentos-registro-pesquisa', ['dados' => $dados])

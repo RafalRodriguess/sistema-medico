@@ -1,0 +1,138 @@
+$cor_destaque: #052453;
+$cor_destaque_clara: #083982;
+
+
+#sidebar-chat {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    z-index: 1050;
+    border-left: solid 1px rgba(0,0,0,0.1);
+
+    /* scrollbar */
+    *::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    *::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.3);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+
+        &:window-inactive {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    .sidebar-chat-header {
+        padding: 0.5em;
+        min-height: 70px;
+        background-color: $cor_destaque_clara;
+        font-size: 1.25em;
+        line-height: 50px;
+        color: white;
+        display: flex;
+        align-items: baseline;
+
+        .title {
+            flex-grow: 1;
+            word-wrap: wrap;
+            word-break: break-words;
+        }
+
+        .close-button {
+            font-size: 0.75em;
+            line-height: unset;
+            background-color: unset;
+            border: unset;
+            color: white;
+            cursor: pointer;
+        }
+    }
+
+    .sidebar-chat-body {
+        height: 100%;
+        overflow: auto;
+        position: relative;
+        max-width: inherit;
+        width: 100%;
+        background-color: white;
+
+        .contatos-container {
+            height: max-content;
+            width: 100%;
+            display: grid;
+            grid-auto-rows: 1fr;
+        }
+
+        .contato {
+            width: 100%;
+            height: 100%;
+        }
+
+        .contato-wrapper {
+            height: 100%;
+        }
+
+        .contato-nome {
+            font-size: 0.9em;
+        }
+
+        .user-image {
+            width: 2.5em;
+            height: 2.5em;
+        }
+
+        .round-user-icon {
+            font-size: 1.5rem;
+        }
+
+        .mensagem {
+            margin: 0;
+        }
+
+        .mensagem-data {
+            display: flex;
+            flex-flow: row;
+            width: 100%;
+            justify-content: space-between;
+
+            .data, .hora {
+                display: block;
+            }
+        }
+    }
+}
+
+#sidebar-chat-button {
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+    width: 2.25em;
+    height: 2.25em;
+    background: $cor_destaque;
+    z-index: 1030;
+    border: unset;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.25em;
+    box-shadow: 2px 2px 5px 0 rgb(0 0 0 / 20%);
+    cursor: pointer;
+
+    i {
+        position: absolute;
+        top: calc(50% + 1px);
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}

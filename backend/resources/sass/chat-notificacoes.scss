@@ -1,0 +1,91 @@
+#chat-notifications-dropdown .message-center .notification-message {
+    padding: 7.5px 5px;
+    display: flex;
+    align-items: center;
+
+    &>* {
+        flex-grow: 0;
+        flex-shrink: 0;
+    }
+
+    .mail-content {
+        flex-grow: 1;
+        flex-shrink: 1;
+        margin-left: 0.5rem;
+        color: $light_font;
+    }
+
+    .mensagem-usuario {
+        font-weight: 500;
+        margin: 0;
+    }
+
+    .mensagem {
+        font-weight: 300;
+        margin: 0 0 0.25rem 0;
+        font-size: 1rem;
+    }
+
+    .mensagem-data-hora {
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+}
+
+#toasts-notificacao {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-flow: column-reverse;
+    width: calc(min(300px, 50%));
+    z-index: 2010;
+
+    .notificacao-chat {
+        transition: 0.25s ease-in-out;
+        cursor: pointer;
+        opacity: 0;
+
+        &.visible {
+            opacity: 1;
+        }
+
+        &>*,
+        .card-container>*,
+        .conteudo-container>* {
+            background-color: $cor_msg_destinatario;
+            padding: 5px 7.5px 0 7.5px;
+        }
+
+        .conteudo-container {
+            margin-right: 0;
+
+            &>* {
+                margin-bottom: 0;
+            }
+        }
+
+        .card-header {
+            font-weight: 500;
+            padding: 5px 7.5px;
+        }
+
+        .card-body {
+            padding: 0 7.5px 5px 7.5px;
+            word-break: break-word;
+        }
+
+        .card-footer {
+            font-size: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .user-image {
+            width: 2.5em;
+            height: 2.5em;
+        }
+    }
+}

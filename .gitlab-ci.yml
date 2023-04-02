@@ -1,0 +1,29 @@
+stages:
+  - deploy
+
+
+deploy:backend:prd:
+  stage: deploy
+  image: ambientum/php:7.2
+  before_script:
+    - sudo apk add py-pygments git openssh-client rsync && sudo rm -rf /var/cache/apk/*
+    - mkdir -p ~/.ssh
+    - echo "$SSH_HOST_KEY" > ~/.ssh/known_hosts
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' > ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh
+    - chmod 644 ~/.ssh/known_hosts
+    - chmod 600 ~/.ssh/id_rsa
+    - sudo composer self-update --2
+  script:
+    - cd $CI_PROJECT_DIR/backend && composer install --no-ansi
+    - cd $CI_PROJECT_DIR/backend && ./vendor/bin/dep  --no-ansi -vvv --revision="$CI_COMMIT_SHA" deploy production
+  environment:
+    name: production
+    url: "https://gestorhospitalar.masterclinic.app.br/"
+  cache:
+    paths:
+      - $CI_PROJECT_DIR/vendor
+  only:
+    refs:
+      - master
+  when: manual

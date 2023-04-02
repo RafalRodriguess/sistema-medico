@@ -1,0 +1,181 @@
+@import "_fonts.scss";
+@import "_variaveis.scss";
+@import "chat-app.scss";
+@import "chat-notificacoes.scss";
+@import "chat-sidebar.scss";
+@import "entregas-exame.scss";
+
+// Oculta a toolbar do telescope caso não esteja permitido ve-la (caso não tenha logado admin)
+.sf-error-toolbar {
+    display: none;
+}
+
+// #region Tipos fullscreen
+body.single-view-fullscreen {
+    overflow: hidden;
+}
+
+body.minimal-fullscreen {
+    .topbar,
+    aside.left-sidebar {
+        display: none;
+    }
+
+    .page-wrapper {
+        display: flex;
+        justify-content: center;
+        flex-flow: column;
+        margin: 0 !important;
+        padding: 0 !important;
+        min-height: 100vh !important;
+
+        & > .container-fluid {
+            display: flex;
+            flex-flow: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex-grow: 1;
+        }
+    }
+
+    .footer {
+        left: 0;
+        padding: 0 15px;
+        height: 36px;
+        line-height: 36px;
+    }
+}
+// #endregion
+
+textarea.readonly, input[type="checkbox"].readonly, input[type="checkbox"].readonly + .iCheck-helper {
+    pointer-events: none;
+    cursor: default !important;
+}
+
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.table-styled {
+    td,
+    th {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    td:first-child,
+    th:first-child {
+        text-align: left;
+    }
+
+    td:last-child,
+    th:last-child {
+        text-align: right;
+    }
+
+    .header-compact {
+        pointer-events: none;
+        cursor: help;
+    }
+}
+
+span.disabled {
+    background-color: rgba(0,0,0,.03) !important;
+}
+
+.modal-generico {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    padding: 2em 2.5em;
+    z-index: 1050;
+    background-color: rgba($color: #000000, $alpha: 0.15);
+
+    &.no-shadow {
+        background-color: unset;
+    }
+
+    & > * {
+        width: 100%;
+        height: 100%;
+    }
+
+    .loading-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.loading-overlay-simples {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .spinner-border {
+        width: 5rem;
+        height: 5rem;
+    }
+}
+
+.not-opaque {
+    opacity: 0;
+    transition: 0.15s ease-in-out;
+}
+
+.opaque {
+    opacity: 1;
+    transition: 0.15s ease-in-out;
+}
+
+
+// #region CORREÇÕES E AJUSTES NO BOOTSTRAP OU ELEMENTOS TEMPLATE
+
+.btn.disabled, .btn[disabled] {
+    pointer-events: none;
+    cursor: default;
+}
+
+.btn.btn-inset {
+    position: absolute;
+    top: 50%;
+    transform: translate(-100%, -50%);
+}
+
+.v-hidden {
+    visibility: hidden;
+}
+
+.custom-file-label.disabled, input[type="file"].disabled {
+    pointer-events: none;
+    background: #f1f1f1;
+}
+
+.monospace-select2 .select2-results__option ,
+.monospace-select2 .select2-results__option *{
+    font-family: monospace !important;
+}
+
+.select2-selection--multiple {
+    border-color: #d9d9d9 !important;
+
+    .select2-selection__rendered {
+        padding: 0 !important;
+    }
+
+    .select2-search__field {
+        color: #999;
+        font-weight: 300;
+        padding: 0 8px !important;
+    }
+}
+
+// #endregion

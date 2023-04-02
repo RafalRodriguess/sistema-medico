@@ -1,0 +1,43 @@
+#conteudo-modal-cadastro {
+    overflow: auto;
+}
+
+#button-fechar-modal i {
+    width: 1em;
+    height: 100%;
+    position: relative;
+    &::before {
+        position: absolute;
+        top: calc(50% + 1px);
+        left: calc(50% + 1px);
+        transform: translate(-50%, -50%);
+        font-size: 1.25em;
+    }
+}
+.break-words {
+    word-break: break-word;
+}
+.status-entrega {
+    color: white;
+    width: 100%;
+    pointer-events: none;
+
+    &.status-entrega_pendente {
+        background-color: #dc7d35;
+    }
+    &.status-entrega_falta-resultado {
+        background-color: #ffc107;
+    }
+    &.status-entrega_falta-receber {
+        background-color: #dc3545;
+    }
+    &.status-entrega_falta-imprimir {
+        background-color: #17a2b8;
+    }
+    &.status-entrega_falta-entregar {
+        background-color: #28a745;
+    }
+    &.status-entrega_entregue {
+        background-color: #6c757d;
+    }
+}

@@ -1,0 +1,9 @@
+diff a/backend/app/Http/Controllers/Comercial/Produtos.php b/backend/app/Http/Controllers/Comercial/Produtos.php	(rejected hunks)
+@@ -18,7 +18,6 @@
+ use Illuminate\Support\Facades\DB;
+ use Illuminate\Support\Facades\Storage;
+ use Illuminate\Support\Str;
+-use Image;
+ 
+ class Produtos extends Controller
+ {

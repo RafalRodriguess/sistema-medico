@@ -1,0 +1,294 @@
+@extends('instituicao.layout')
+
+
+@push('scripts')
+    <!-- jQuery peity -->
+    <script src="{{ asset('material/assets/plugins/tablesaw-master/dist/tablesaw.jquery.js') }}"></script>
+    <script src="{{ asset('material/assets/plugins/tablesaw-master/dist/tablesaw-init.js') }}"></script>
+    <!-- ============================================================== -->
+    <!-- Style switcher -->
+    <!-- ============================================================== -->
+    <script src="{{ asset('material/assets/plugins/styleswitcher/jQuery.style.switcher.js') }}"></script>
+@endpush
+
+@push('estilos')
+    <link href="{{ asset('material/assets/plugins/tablesaw-master/dist/tablesaw.css') }}" rel="stylesheet">
+    <style>
+        /* @media print {
+            body * {
+                visibility: hidden;
+            }
+            .print-table, .print-table * {
+                visibility: visible;
+            }
+
+            .print-table {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+
+            .left-sidebar{
+                display: none,
+            }
+
+            .topbar{
+                display: none;
+            }
+
+        } */
+
+        @media print {
+           * {
+                background: transparent;
+                color: #000;
+                text-shadow: none;
+                filter: none;
+                -ms-filter: none;
+            }
+            body * {
+                visibility: hidden;
+            }
+
+            .print-table, .print-table * {
+                visibility: visible;
+
+            }
+            .print-table {
+                position: absolute;
+                width: 100%;
+                top: 0;
+                left: 0;
+
+                /* display: block; */
+            }
+
+            .no_print {
+                display: none !important;
+            }
+
+            .quebraPagina{
+                page-break-before: always;
+            }
+
+            .left-sidebar{
+                display: none,
+            }
+
+            .topbar{
+                display: none;
+            }
+
+            .formRelatorioAtendimento{
+                display: none;
+            }
+
+            /*  */
+        }
+
+        .select2-selection {
+            height: 50px !important;
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__rendered {
+            height: 50px!important;
+        }
+
+        .select2-selection__choice {
+            font-size: 14px;
+            margin: 2px !important;
+            color: black;
+        }
+    </style>
+@endpush
+
+@section('conteudo')
+
+    <div class="row page-titles">
+        <div class="col-md-5 col-8 align-self-center">
+            <h3 class="text-themecolor m-b-0 m-t-0">Conciliação de cartão</h3>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Relatorio</a></li>
+                <li class="breadcrumb-item active">Conciliação de cartão</li>
+            </ol>
+        </div>
+
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Start Page Content -->
+    <!-- ============================================================== -->
+    <div class="row">
+        <div class="col-12">
+            <!-- Column -->
+            <div class="card">
+                <div class="card-body">
+                    <form action="javascript:void(0)" class="formRelatorio" id="formRelatorio">
+                        @csrf
+                        <div class="row">
+                            
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Data inicial</label>
+                                            <input type="date" id="data_inicio" name="data_inicio" class="form-control" value="{{date('Y-m-d')}}">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label class="form-label">Data final</label>
+                                            <input type="date" id="data_fim" name="data_fim" class="form-control" value="{{date('Y-m-d')}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+
+                            {{-- <div class="col-md-8"></div> --}}
+                            {{-- <div class="col-md-8"></div> --}}
+                            {{-- <div class="col-md-2">
+                                <div class="form-group imprimir" style="margin-top: 30px !important; float: right; width: 100%; display: none">
+                                    <button type="submit" class="btn waves-effect waves-light btn-block btn-success" onclick="imprimir()">Imprimir</button>
+                                </div>
+                            </div> --}}
+                            <div class="col-md-12 acao">
+                                <div class="form-group text-right">
+                                    <button type="submit" class="btn btn-info waves-effect waves-light m-r-10">Pesquisar</button>
+                                </div>
+
+                                <div class="form-group text-right">
+                                    
+
+                                    <div class="col-md-2 imprimir" style=" float: right; width: 100%; display: none">
+                                        <div class="form-group">
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-success" onclick="imprimir()">Imprimir</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 financeiro" style=" float: right; width: 100%; display: none">
+                                        <div class="form-group">
+                                            <button type="button" class="btn waves-effect waves-light btn-block btn-danger gera_financeiro_modal">Gerar conta a pagar</button>
+                                        </div>
+                                    </div>
+                                    @can('habilidade_instituicao_sessao', 'exporta_excel_relatorio_atendimento')
+                                        <div class="col-md-1 btnExportExcel" style="float: right; width: 100%; display: none;">
+                                            <a href="" id="btnExportExcel" target="_blank" class="btn btn-outline-secondary" style="border: 1px solid #ced4da;" data-toggle="tooltip" data-placement="top" title="Exportar para excel">
+                                                <i class="fa fw fa-file-excel" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    @endcan
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="table-responsive print-table mb-2">
+                        <div class="cabecalho" style="display: none;">
+                            <div class="col-md-12 row align-items-center">
+                                <img class="light-logo col-sm-2" src="@if ($instituicao->imagem){{ \Storage::cloud()->url($instituicao->imagem) }} @endif" alt="" style="height: 100px;"/>
+                                <h3 class='lead col-sm-8'>{{$instituicao->nome}}</h3>
+                                <label class="col-sm-2">{{date("d/m/Y H:i:s")}}</label>
+                                <small class="text-muted col-sm-12 text-center"><b>endereço:</b> {{$instituicao->rua}} <b>Nº:</b> {{$instituicao->numero}} {{$instituicao->complemento}} <b>Bairro:</b> {{$instituicao->bairro}} <b>Cidade:</b> {{$instituicao->cidade}} <b>UF:</b> {{$instituicao->estado}}</small>
+                            </div>
+
+                            <h3 class="mt-3"><center>Conciliação de cartão</center></h3>
+
+                            <hr class="hr-line-dashed">
+                        </div>
+
+                        <div class="tabela"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Column -->
+
+            <!-- Column -->
+
+        </div>
+    </div>
+
+@endsection
+
+@push('scripts')
+    <script>
+        function imprimir(){
+            $(".imprimir").attr('disabled', true);
+            $(".texto_titulo").text($("#tipo_relatorio").val());
+            $(".cabecalho").css("display", "block");
+            window.print();
+            $(".cabecalho").css("display", "none");
+            setTimeout(function(){
+                $(".imprimir").attr('disabled', false)
+            }, 1000);
+        }
+
+        $(document).ready(function() {
+            
+        })
+
+        $('#formRelatorio').on('submit', function(e){
+            e.preventDefault()
+            var formData = new FormData($(this)[0]);
+            $.ajax("{{route('instituicao.relatoriosCartao.tabela')}}", {
+                method: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: () => {
+                    $('.loading').css('display', 'block');
+                    $('.loading').find('.class-loading').addClass('loader')
+                },
+                success: function (result) {
+                    $(".tabela").html(result);
+                    $(".imprimir").css('display', 'block')                    
+                },
+                complete: () => {
+                    $('.loading').css('display', 'none');
+                    $('.loading').find('.class-loading').removeClass('loader')
+                }
+            })
+        })
+
+        function ativarClass(){
+            // $(".table-responsive").find('.accordion').find('#demo-foo-row-toggler').footable()
+        }
+
+        // $("#btnExportExcel").on('click', function(e){
+        //     var formData = new FormData($("#formRelatorioAtendimento")[0]);
+        //     $.ajax("{{route('instituicao.relatorioAtendimento.exportExcel')}}", {
+        //         method: "POST",
+        //         data: formData,
+        //         processData: false,
+        //         contentType: false,
+        //         beforeSend: () => {
+        //             $('.loading').css('display', 'block');
+        //             $('.loading').find('.class-loading').addClass('loader')
+        //         },
+        //         success: function (response) {
+    
+        //             $.toast({
+        //                 heading: response.title,
+        //                 text: response.text,
+        //                 position: 'top-right',
+        //                 loaderBg: '#ff6849',
+        //                 icon: response.icon,
+        //                 hideAfter: 3000,
+        //                 stack: 10
+        //             });
+                    
+        //         },
+        //         complete: () => {
+        //             $('.loading').css('display', 'none');
+        //             $('.loading').find('.class-loading').removeClass('loader')
+                    
+        //         },
+        //         error: function (response) {
+        //             $('.loading').css('display', 'none');
+        //             $('.loading').find('.class-loading').removeClass('loader')
+        //         }
+        //     })
+        // })
+
+    </script>
+@endpush

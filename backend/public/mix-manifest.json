@@ -1,0 +1,8 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/js/htmlTemplate.js": "/js/htmlTemplate.js",
+    "/js/chatApp.js": "/js/chatApp.js",
+    "/js/chatNotifications.js": "/js/chatNotifications.js",
+    "/js/chatSidebar.js": "/js/chatSidebar.js"
+}

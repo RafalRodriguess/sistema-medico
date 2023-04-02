@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class RemoveColumnCodigoSusInstituicoesTransferencia extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('instituicoes_transferencia', function (Blueprint $table) {
+            $table->dropColumn('codigo_sus');
+            $table->string('cnes');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('instituicoes_transferencia', function (Blueprint $table) {
+            $table->string('codigo_sus')->nullable()->after('descricao');
+            $table->dropColumn('cnes');
+        });
+    }
+}

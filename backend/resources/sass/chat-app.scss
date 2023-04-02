@@ -1,0 +1,429 @@
+$bg_light: #ebeef4;
+$bg_selected: white;
+$padding_default_small: 5px 7.5px;
+$border_color: rgba(120, 130, 140, 0.13);
+
+%chat-button {
+    border-radius: 50%;
+
+    width: 2.5em;
+    height: 2.5em;
+    padding: 0;
+
+    i {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 2em;
+        font-size: 1.25em;
+    }
+}
+
+// O elemento raiz do chat
+#chat-container,
+#modal-usuarios-busca {
+
+    /* scrollbar */
+    *::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+
+    *::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.15);
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+
+    *::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.3);
+        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+
+        &:window-inactive {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
+
+#chat-container-wrapper {
+    // padding-top: 0.5em;
+    padding-top: 22px;
+}
+
+.minimal-fullscreen #chat-container-wrapper {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-grow: 1;
+}
+
+#chat-container {
+    padding: 0;
+    display: flex;
+    flex-flow: row;
+    max-width: 1600px;
+    max-height: 700px;
+    height: calc(100vh - 2em - 50px);
+    min-height: 350px;
+    width: 100%;
+    color: $light_font;
+    overflow: hidden;
+    margin: 0;
+    border-color: $border_color;
+
+    .chat-sidebar,
+    .chat-messages-tab {
+        display: flex;
+        flex-flow: column;
+        justify-content: stretch;
+        position: relative;
+    }
+}
+
+.chat-header {
+    height: max-content;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: $half_padding $small_padding;
+    border-bottom: 1px solid $border_color;
+    min-height: calc(3em + 10px);
+
+
+    .chat-user {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        color: $dark_font;
+        font-weight: 400;
+        padding: $padding_default_small;
+    }
+}
+
+.chat-sidebar {
+    background-color: $bg_light;
+
+    .chat-header {
+        background-color: white;
+    }
+
+    .chat-search {
+        padding: $padding_default_small;
+        position: relative;
+        width: 100%;
+    }
+
+    .chat-contacts-container {
+        flex-grow: 1;
+        overflow: auto;
+        width: 100%;
+        position: relative;
+
+        #chat-contacts {
+            display: flex;
+            flex-flow: column;
+            height: max-content;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .button-add-contact {
+        @extend %chat-button;
+        position: absolute;
+        right:  $padding;
+        bottom: $small_padding;
+    }
+}
+
+.search {
+    padding-right: 2em;
+    border-radius: $border_radius !important;
+}
+
+.clear-search {
+    background: unset;
+    border: unset;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 2em;
+    height: 100%;
+    padding: 0;
+    cursor: pointer;
+
+    i {
+        padding-top: 50%;
+        height: 100%;
+        line-height: 1em;
+        padding-right: 0.75em;
+    }
+}
+
+.chat-user-name {
+    margin: 0 0.5em;
+    color: $dark_font;
+    font-weight: 400;
+    word-break: break-word;
+}
+
+.user-image {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0;
+    flex-shrink: 0;
+    flex-grow: 0;
+    position: relative;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .round-user-icon {
+        text-align: center;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: block;
+        font-weight: 500;
+        color: white;
+        font-family: 'Cousine', monospace;
+        font-size: 1.25rem;
+        height: 1.25rem !important;
+        line-height: 1.5rem;
+    }
+}
+
+.chat-messages-tab {
+    border-left: 1px solid $border_color;
+    display: flex;
+    flex-flow: column;
+    justify-content: stretch;
+
+    .carregar-mais-mensagens {
+        background-color: rgba($color: #000000, $alpha: 0.15);
+        padding: $padding_default_small;
+        border-radius: 5px;
+        border-color: transparent;
+        color: $dark_font;
+    }
+
+    #chat-message-box {
+        display: flex;
+        flex-flow: column;
+        flex-grow: 1;
+        padding: $small_padding;
+        padding-bottom: 0;
+        height: 300px;
+        width: 100%;
+        overflow: auto;
+    }
+
+    .chat-text-input {
+        border-top: 1px solid $border_color;
+        padding: $small_padding $small_padding $small_padding $padding;
+        display: flex;
+        align-items: center;
+    }
+
+    #send-message-button {
+        @extend %chat-button;
+        margin-left: $small_padding;
+        position: relative;
+
+
+        .send-message-icon {
+            line-height: 2.15rem;
+        }
+
+        .send-message-loading {
+            position: absolute;
+            width: 1.5em;
+            height: 1.5em;
+            top: 0.175em;
+            left: 0.175em;
+        }
+    }
+}
+
+// #endsection
+// #section MENSAGENS
+.mensagem {
+    width: 100%;
+    margin-bottom: 1rem;
+
+    .mensagem-header {
+        display: flex;
+        align-content: baseline;
+
+        .mensagem-nome {
+            color: $light_font;
+            display: block;
+            margin: 0 $padding 0 0;
+        }
+    }
+
+    .mensagem-data-wrapper,
+    .mensagem-hora-wrapper {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+    }
+
+    .mensagem-data,
+    .mensagem-hora {
+        display: block;
+        font-weight: 300;
+        color: grey;
+        font-size: 0.75rem;
+        height: 0.75rem;
+    }
+
+    .mensagem-body {
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        width: 100%;
+
+        .mensagem-conteudo {
+            color: $dark_font;
+            font-weight: 300;
+            max-width: 500px;
+            margin-top: $half_padding;
+            border-radius: $border_radius;
+            box-shadow: 1px 1px 1px 0 rgb(0 0 0 / 10%);
+            padding: $padding_default_small;
+            background-color: $cor_msg_remetente;
+
+            &.mensagem-vazia {
+                color: rgba(0, 0, 0, 0.4);
+                font-size: 0.75em;
+            }
+        }
+    }
+
+    &.destinatario {
+        justify-content: flex-end;
+
+        .mensagem-header {
+            justify-content: flex-end;
+
+            .mensagem-nome {
+                margin: 0 0 0 $padding;
+            }
+        }
+
+        .mensagem-body .mensagem-conteudo {
+            background-color: $cor_msg_destinatario;
+        }
+    }
+}
+
+// #endsection
+// #section CONTATOS
+
+.contato {
+    cursor: pointer;
+    height: 80px;
+    overflow: hidden;
+    background-color: transparent;
+
+    &.selecionado {
+        background-color: $bg_selected;
+    }
+
+    &>div {
+        height: 100%;
+    }
+
+
+    .contato-header {
+        padding: $padding_default_small;
+
+        .user-image {
+            margin-right: 0.5rem;
+        }
+
+        .contato-nome {
+            font-weight: 400;
+            color: $dark_font;
+            word-break: break-word;
+            height: max-content;
+        }
+    }
+
+    .contato-header,
+    .contato-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .contato-wrapper {
+        padding: $padding_default_small;
+        border-bottom: 1px solid $border_color;
+        position: relative;
+
+        .button-adicionar-contato {
+            position: absolute;
+            right: 0.25rem;
+            top: 50%;
+            transform: translate(0, -50%);
+            display: flex;
+            width: 2rem;
+            height: 2rem;
+            justify-content: center;
+            align-items: center;
+
+            i {
+                padding-left: 4px;
+            }
+        }
+    }
+}
+
+#modal-usuarios-busca {
+    .card-body {
+        height: calc(100% - 3rem);
+    }
+
+    .resultados-container,
+    .loading-modal {
+        height: calc(100% - 2rem);
+    }
+
+    .resultados-container {
+        overflow: auto;
+    }
+}
+
+// #endsection
+// #section LOADING
+.loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    top: 0;
+    left: 0;
+}
+
+// #endsection
+
+// Corrigindo o + não centralizado do font awesome
+i.fas.fa-plus::before {
+    top: 1.2px;
+    position: relative;
+}
